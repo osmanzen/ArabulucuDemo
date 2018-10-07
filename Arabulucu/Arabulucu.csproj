@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{B09B52AB-3DA4-4953-B318-3BCFA77ED458}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Arabulucu</RootNamespace>
+    <AssemblyName>Arabulucu</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>C:\Users\ZeN\Desktop\VBox Paylaşılan\Arabulucu\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>2</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <PublishWizardCompleted>true</PublishWizardCompleted>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x64\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
+    <OutputPath>bin\x64\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x64</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\x86\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x86'">
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestCertificateThumbprint>370BC25E2AB2405CA49BE39A29945B176E8C9EC3</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ManifestKeyFile>Arabulucu_TemporaryKey.pfx</ManifestKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GenerateManifests>true</GenerateManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>true</SignManifests>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="DevExpress.BonusSkins.v17.2" />
+    <Reference Include="DevExpress.Data.v17.2" />
+    <Reference Include="DevExpress.Pdf.v17.2.Core, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Pdf.v17.2.Drawing, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.Utils.v17.2" />
+    <Reference Include="DevExpress.Sparkline.v17.2.Core" />
+    <Reference Include="DevExpress.XtraBars.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraEditors.v17.2" />
+    <Reference Include="DevExpress.Printing.v17.2.Core" />
+    <Reference Include="DevExpress.XtraGrid.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraLayout.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraNavBar.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPdfViewer.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL" />
+    <Reference Include="DevExpress.XtraPrinting.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="DevExpress.XtraTreeList.v17.2, Version=17.2.5.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a" />
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Office.Interop.Word, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ArabulucuHelpers\ArabulucuHelper.cs" />
+    <Compile Include="ArabulucuHelpers\EvrakOlusturucu.cs" />
+    <Compile Include="ArabulucuUC\BasvurucuUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArabulucuUC\BasvurucuUC.Designer.cs">
+      <DependentUpon>BasvurucuUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuUC\DosyaBilgileriUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArabulucuUC\DosyaBilgileriUC.Designer.cs">
+      <DependentUpon>DosyaBilgileriUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafUC.Designer.cs">
+      <DependentUpon>KarsiTarafUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafKurumUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafKurumUC.Designer.cs">
+      <DependentUpon>KarsiTarafKurumUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\BuroGuncelleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\BuroGuncelleForm.Designer.cs">
+      <DependentUpon>BuroGuncelleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\BuroKayitForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\BuroKayitForm.Designer.cs">
+      <DependentUpon>BuroKayitForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\DosyaEkleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\DosyaEkleForm.Designer.cs">
+      <DependentUpon>DosyaEkleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\AnlasmaTutanagiForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\AnlasmaTutanagiForm.Designer.cs">
+      <DependentUpon>AnlasmaTutanagiForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\BelgeTamEkranForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\BelgeTamEkranForm.Designer.cs">
+      <DependentUpon>BelgeTamEkranForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\ToplantiErtelemeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\ToplantiErtelemeForm.Designer.cs">
+      <DependentUpon>ToplantiErtelemeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\UcretSozlesmeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\UcretSozlesmeForm.Designer.cs">
+      <DependentUpon>UcretSozlesmeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\DosyaKonulariForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\DosyaKonulariForm.Designer.cs">
+      <DependentUpon>DosyaKonulariForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\DosyaTuruForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\DosyaTuruForm.Designer.cs">
+      <DependentUpon>DosyaTuruForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\HesapEkleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\HesapEkleForm.Designer.cs">
+      <DependentUpon>HesapEkleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\HeyetEkleForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\HeyetEkleForm.Designer.cs">
+      <DependentUpon>HeyetEkleForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\KayitBasariliForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\KayitBasariliForm.Designer.cs">
+      <DependentUpon>KayitBasariliForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\TarafSecimForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\TarafSecimForm.Designer.cs">
+      <DependentUpon>TarafSecimForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\ToplantıDavetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\BelgeForm\ToplantıDavetForm.Designer.cs">
+      <DependentUpon>ToplantıDavetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\VekilSecimForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\VekilSecimForm.Designer.cs">
+      <DependentUpon>VekilSecimForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MessageForms\SplashScreen1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\SplashScreen1.Designer.cs">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\TaraflarForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\TaraflarForm.Designer.cs">
+      <DependentUpon>TaraflarForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuForms\VekillerForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\VekillerForm.Designer.cs">
+      <DependentUpon>VekillerForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MessageForms\WaitForm1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\WaitForm1.Designer.cs">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="ArabulucuUC\BasvurucuUC.resx">
+      <DependentUpon>BasvurucuUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuUC\DosyaBilgileriUC.resx">
+      <DependentUpon>DosyaBilgileriUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuUC\KarsiTarafUC.resx">
+      <DependentUpon>KarsiTarafUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuUC\KarsiTarafKurumUC.resx">
+      <DependentUpon>KarsiTarafKurumUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\BuroGuncelleForm.resx">
+      <DependentUpon>BuroGuncelleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\BuroKayitForm.resx">
+      <DependentUpon>BuroKayitForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\DosyaEkleForm.resx">
+      <DependentUpon>DosyaEkleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\BelgeForm\AnlasmaTutanagiForm.resx">
+      <DependentUpon>AnlasmaTutanagiForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\BelgeForm\BelgeTamEkranForm.resx">
+      <DependentUpon>BelgeTamEkranForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\BelgeForm\ToplantiErtelemeForm.resx">
+      <DependentUpon>ToplantiErtelemeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\BelgeForm\UcretSozlesmeForm.resx">
+      <DependentUpon>UcretSozlesmeForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\DosyaKonulariForm.resx">
+      <DependentUpon>DosyaKonulariForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\DosyaTuruForm.resx">
+      <DependentUpon>DosyaTuruForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\HesapEkleForm.resx">
+      <DependentUpon>HesapEkleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\HeyetEkleForm.resx">
+      <DependentUpon>HeyetEkleForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\TarafSecimForm.resx">
+      <DependentUpon>TarafSecimForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\BelgeForm\ToplantıDavetForm.resx">
+      <DependentUpon>ToplantıDavetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\VekilSecimForm.resx">
+      <DependentUpon>VekilSecimForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="MessageForms\SplashScreen1.resx">
+      <DependentUpon>SplashScreen1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\TaraflarForm.resx">
+      <DependentUpon>TaraflarForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuForms\VekillerForm.resx">
+      <DependentUpon>VekillerForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\WaitForm1.resx">
+      <DependentUpon>WaitForm1.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Evraklar\Anlaşma Tutanağı.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Evraklar\Arabuluculuk Ücret Sözleşmesi.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Evraklar\Dosya Kapak Sayfası.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Evraklar\Toplantı Ertelenmesi Tutanağı.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Evraklar\Toplantı Tutanağı.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Evraklar\Toplantıya Davet Mektubu.docx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ZenSoftDAL\ZenSoftDAL.csproj">
+      <Project>{F69414BA-039C-4CDF-ADF6-460440EE9BA1}</Project>
+      <Name>ZenSoftDAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ZenSoftModel\ZenSoftModel.csproj">
+      <Project>{D5F65AF1-BD88-445E-B08C-682DBF7C1B9A}</Project>
+      <Name>ZenSoftModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-add-folder-filled-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-alarm-filled-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-people-filled-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-scales-filled-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-services-filled-32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-law-filled-321.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add1.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close1.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close2.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\remove.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\delete.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\close3.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add2.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\additem.svg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-available-updates-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\apply_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\OkGif.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8-search-16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\add_16x161.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\printer_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\preview_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\customization_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\edit_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\refresh_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\show_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\addfile_16x16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Zensoft_logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.6.1 %28x86 ve x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 </ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
