@@ -47,7 +47,7 @@ namespace Arabulucu.ArabulucuUC
         Taraf secilenBasvurucu;
         private void txtBtnBasvurucu_Click(object sender, EventArgs e)
         {
-            trfForm = new TarafSecimForm(1);
+            trfForm = new TarafSecimForm(0);
             if (trfForm.ShowDialog() == DialogResult.OK)
             {
                 secilenBasvurucu = trfForm.secilenTaraf;

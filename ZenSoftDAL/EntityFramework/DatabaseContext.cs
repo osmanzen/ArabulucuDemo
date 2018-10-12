@@ -22,6 +22,8 @@ namespace ZenSoftDAL.EntityFramework
         public virtual DbSet<Taraf> Taraf { get; set; }
         public virtual DbSet<TelefonBilgileri> TelefonBilgileri { get; set; }
         public virtual DbSet<Vekil> Vekil { get; set; }
+        public virtual DbSet<SirketYetkilisi> SirketYetkilisi { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

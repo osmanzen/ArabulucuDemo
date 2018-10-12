@@ -16,100 +16,102 @@ namespace Arabulucu.ArabulucuHelpers
         static object readOnly;
         static object fileName;
         static Document doc;
-        static string _path;
         static string davetGirisText;
+        static string _path = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Arabulucu Evraklar\";
 
-        public static string dosyaKapakSayfasi(Dava _dava)
-        {
-            _path = System.Windows.Forms.Application.StartupPath + @"\Evraklar\Dosya Kapak Sayfası.docx";
 
-            if (!File.Exists(_path))
-            {
-                System.Windows.Forms.MessageBox.Show("Dosya bulunamadı.");
-                return null;
-            }
-            else
-            {
-                wordApp = new Application();
 
-                missing = System.Reflection.Missing.Value;
-                readOnly = false;
-                fileName = _path;
+        //public static string dosyaKapakSayfasi(Dava _dava)
+        //{
+        //    _path = System.Windows.Forms.Application.StartupPath + @"\Evraklar\Dosya Kapak Sayfası.docx";
 
-                doc = wordApp.Documents.Open(ref fileName, ref missing, ref readOnly, ref readOnly,
-                ref missing, ref missing, ref readOnly, ref missing, ref missing, ref missing, ref missing,
-                ref missing, ref missing, ref missing, ref missing, ref missing);
+        //    if (!File.Exists(_path))
+        //    {
+        //        System.Windows.Forms.MessageBox.Show("Dosya bulunamadı.");
+        //        return null;
+        //    }
+        //    else
+        //    {
+        //        wordApp = new Application();
 
-                object dosyaNo = "dosyaNo";
-                doc.Bookmarks.get_Item(ref dosyaNo).Range.Text = _dava.ArabuluculukDosyaNo;
+        //        missing = System.Reflection.Missing.Value;
+        //        readOnly = false;
+        //        fileName = _path;
 
-                object arabulucuSehir = "arabulucuSehir";
-                doc.Bookmarks.get_Item(ref arabulucuSehir).Range.Text = _dava.ArabuluculukBurosu.ToUpper();
+        //        doc = wordApp.Documents.Open(ref fileName, ref missing, ref readOnly, ref readOnly,
+        //        ref missing, ref missing, ref readOnly, ref missing, ref missing, ref missing, ref missing,
+        //        ref missing, ref missing, ref missing, ref missing, ref missing);
 
-                object buroDosyaNo = "buroDosyaNo";
-                doc.Bookmarks.get_Item(ref buroDosyaNo).Range.Text = _dava.BuroDosyaNo;
+        //        object dosyaNo = "dosyaNo";
+        //        doc.Bookmarks.get_Item(ref dosyaNo).Range.Text = _dava.ArabuluculukDosyaNo;
 
-                object basvuruTarihi = "basvuruTarihi";
-                doc.Bookmarks.get_Item(ref basvuruTarihi).Range.Text = _dava.BasvuruTarihi.Value.ToShortDateString();
+        //        object arabulucuSehir = "arabulucuSehir";
+        //        doc.Bookmarks.get_Item(ref arabulucuSehir).Range.Text = _dava.ArabuluculukBurosu.ToUpper();
 
-                object bitisTarihi = "bitisTarihi";
-                doc.Bookmarks.get_Item(ref bitisTarihi).Range.Text = _dava.BasvuruTarihi.Value.AddMonths(1).ToShortDateString();
+        //        object buroDosyaNo = "buroDosyaNo";
+        //        doc.Bookmarks.get_Item(ref buroDosyaNo).Range.Text = _dava.BuroDosyaNo;
 
-                object basvurucu = "basvurucu";
-                doc.Bookmarks.get_Item(ref basvurucu).Range.Text = _dava.Basvurucu.TarafAdi.ToUpper();
+        //        object basvuruTarihi = "basvuruTarihi";
+        //        doc.Bookmarks.get_Item(ref basvuruTarihi).Range.Text = _dava.BasvuruTarihi.Value.ToShortDateString();
 
-                object basvurucuVekili = "basvurucuVekili";
-                doc.Bookmarks.get_Item(ref basvurucuVekili).Range.Text = _dava.BasvurucuVekili.AdiSoyadi.ToUpper();
+        //        object bitisTarihi = "bitisTarihi";
+        //        doc.Bookmarks.get_Item(ref bitisTarihi).Range.Text = _dava.BasvuruTarihi.Value.AddMonths(1).ToShortDateString();
 
-                object karsiTaraf = "karsiTaraf";
-                string karsiTarafText = "";
-                List<KarsiTaraf> karsiTarafList = _dava.KarsiTaraflar.ToList();
+        //        object basvurucu = "basvurucu";
+        //        doc.Bookmarks.get_Item(ref basvurucu).Range.Text = _dava.Basvurucu.TarafAdi.ToUpper();
 
-                for (int i = 0; i < karsiTarafList.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        karsiTarafText += karsiTarafList[i].Taraf.TarafAdi.ToUpper();
-                    }
-                    else
-                    {
-                        karsiTarafText += ",\n" + karsiTarafList[i].Taraf.TarafAdi.ToUpper();
-                    }
-                }
-                doc.Bookmarks.get_Item(ref karsiTaraf).Range.Text = karsiTarafText;
+        //        object basvurucuVekili = "basvurucuVekili";
+        //        doc.Bookmarks.get_Item(ref basvurucuVekili).Range.Text = _dava.BasvurucuVekili.AdiSoyadi.ToUpper();
 
-                object basvuruTuru = "basvuruTuru";
-                doc.Bookmarks.get_Item(ref basvuruTuru).Range.Text = _dava.DavaKonulari.FirstOrDefault().DavaTuru.TurAdi.ToUpper();
+        //        object karsiTaraf = "karsiTaraf";
+        //        string karsiTarafText = "";
+        //        List<KarsiTaraf> karsiTarafList = _dava.KarsiTaraflar.ToList();
 
-                object basvuruKonu = "basvuruKonu";
-                string basvuruKonuText = "";
-                List<DavaKonusu> basvuruKonuList = _dava.DavaKonulari.ToList();
+        //        for (int i = 0; i < karsiTarafList.Count; i++)
+        //        {
+        //            if (i == 0)
+        //            {
+        //                karsiTarafText += karsiTarafList[i].Taraf.TarafAdi.ToUpper();
+        //            }
+        //            else
+        //            {
+        //                karsiTarafText += ",\n" + karsiTarafList[i].Taraf.TarafAdi.ToUpper();
+        //            }
+        //        }
+        //        doc.Bookmarks.get_Item(ref karsiTaraf).Range.Text = karsiTarafText;
 
-                for (int i = 0; i < basvuruKonuList.Count; i++)
-                {
-                    if (i == 0)
-                    {
-                        basvuruKonuText += basvuruKonuList[i].KonuAdi.ToUpper();
-                    }
-                    else
-                    {
-                        basvuruKonuText += ",\n" + basvuruKonuList[i].KonuAdi.ToUpper();
-                    }
-                }
-                doc.Bookmarks.get_Item(ref basvuruKonu).Range.Text = basvuruKonuText;
+        //        object basvuruTuru = "basvuruTuru";
+        //        doc.Bookmarks.get_Item(ref basvuruTuru).Range.Text = _dava.DavaKonulari.FirstOrDefault().DavaTuru.TurAdi.ToUpper();
 
-                string path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".docx");
+        //        object basvuruKonu = "basvuruKonu";
+        //        string basvuruKonuText = "";
+        //        List<DavaKonusu> basvuruKonuList = _dava.DavaKonulari.ToList();
 
-                doc.SaveAs2(path);
+        //        for (int i = 0; i < basvuruKonuList.Count; i++)
+        //        {
+        //            if (i == 0)
+        //            {
+        //                basvuruKonuText += basvuruKonuList[i].KonuAdi.ToUpper();
+        //            }
+        //            else
+        //            {
+        //                basvuruKonuText += ",\n" + basvuruKonuList[i].KonuAdi.ToUpper();
+        //            }
+        //        }
+        //        doc.Bookmarks.get_Item(ref basvuruKonu).Range.Text = basvuruKonuText;
 
-                doc.ExportAsFixedFormat(path + ".pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
-                doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges);
+        //        string path = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName() + ".docx");
 
-                wordApp.Quit();
+        //        doc.SaveAs2(path);
 
-                return path;
-            }
-        }
+        //        doc.ExportAsFixedFormat(path + ".pdf", Microsoft.Office.Interop.Word.WdExportFormat.wdExportFormatPDF);
+        //        doc.Close(Microsoft.Office.Interop.Word.WdSaveOptions.wdDoNotSaveChanges);
+
+        //        wordApp.Quit();
+
+        //        return path;
+        //    }
+        //}
 
         public static string ToplantiyaDavet(Dava _dava, Taraf karsiTaraf, Taraf davetEdilen, DateTime tTarihi)
         {
@@ -1376,8 +1378,8 @@ namespace Arabulucu.ArabulucuHelpers
 
                 return path;
             }
-        }        
-        
+        }
+
 
         public static void Yenile(string path)
         {

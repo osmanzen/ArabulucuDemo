@@ -55,7 +55,7 @@ namespace Arabulucu.ArabulucuUC
         TarafSecimForm trfForm;
         private void txtTaraf_Click(object sender, EventArgs e)
         {
-            trfForm = new TarafSecimForm(1);
+            trfForm = new TarafSecimForm(0);
             if (trfForm.ShowDialog() == DialogResult.OK)
             {
                 secilenTaraf = trfForm.secilenTaraf;
@@ -91,8 +91,7 @@ namespace Arabulucu.ArabulucuUC
             {
                 yeniKarsiTaraf.VekilID = secilenVekil.ID;
             }
-
-
+            
             gelenDava.KarsiTaraflar.Add(yeniKarsiTaraf);
         }
     }

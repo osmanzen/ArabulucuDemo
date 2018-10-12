@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Text;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using DevExpress.XtraEditors;
 using ZenSoftDAL.EntityFramework;
 using ZenSoftModel.Entities;
 using Arabulucu.ArabulucuUC;
@@ -16,8 +10,12 @@ using DevExpress.XtraSplashScreen;
 using System.Collections.ObjectModel;
 using Arabulucu.MessageForms;
 using Arabulucu.ArabulucuHelpers;
-using Microsoft.Office.Interop.Word;
 using Arabulucu.MessageForms.BelgeForm;
+using System.IO;
+using DevExpress.XtraTreeList.Nodes;
+using System.Diagnostics;
+using System.Collections;
+using Arabulucu.ArabulucuForms;
 
 namespace Arabulucu
 {
@@ -35,10 +33,10 @@ namespace Arabulucu
         Repository<Heyet> heyetDB;
         Repository<KarsiTaraf> karsiTarafDB;
         Repository<Gorusme> gorusmeDB;
+
         ObservableCollection<Dava> davaList;
         ObservableCollection<Taraf> tarafSource;
         ObservableCollection<Vekil> vekilSource;
-        ObservableCollection<Gorusme> gorusmeSource;
 
         Buro kayitliBuro;
         Dava secilenDava;
@@ -46,35 +44,45 @@ namespace Arabulucu
         int secilenRowIndex;
 
         KarsiTarafUC karsiTarafUC;
+        KarsiTarafSirketUC karsiTarafSirketUC;
         KarsiTarafKurumUC karsiTarafKurumUC;
 
+        TarafSecimForm trfSecimForm;
+        static BuroGuncelleForm buroGuncelleForm;
+        static TaraflarForm taraflarForm;
+        static VekillerForm vekillerForm;
+        static DosyaEkleForm dosyaEkleForm;
+        static YeniEvrakForm yeniEvrakForm;
+
+        TreeListNode baslikNode, turNode;
+        String fPath;
+        DirectoryInfo dInfo;
+        FileInfo fInfo;
+
+        //ANASAYFA YÜKLENİRKEN
         private void MainForm_Load(object sender, EventArgs e)
         {
             buroDB = new Repository<Buro>();
             BuroKayitFormGetir();
 
             davaDB = new Repository<Dava>();
-            davaList = new ObservableCollection<Dava>(davaDB.List());
-            gridControlMainDava.DataSource = davaList;
-
             tarafDB = new Repository<Taraf>();
-            tarafSource = new ObservableCollection<Taraf>(tarafDB.List(x => x.AktifMi));
-
-            vekilDB = new Repository<Vekil>();
-            vekilSource = new ObservableCollection<Vekil>(vekilDB.List(x => x.AktifMi));
-
             karsiTarafDB = new Repository<KarsiTaraf>();
             heyetDB = new Repository<Heyet>();
-
             gorusmeDB = new Repository<Gorusme>();
+            vekilDB = new Repository<Vekil>();
 
+            davaList = new ObservableCollection<Dava>(davaDB.List());
+            tarafSource = new ObservableCollection<Taraf>(tarafDB.List(x => x.AktifMi));
+            vekilSource = new ObservableCollection<Vekil>(vekilDB.List(x => x.AktifMi));
+
+            gridControlMainDava.DataSource = davaList;
+
+            pnlDetailFill.Enabled = false;
             panel2.Enabled = false;
-
-            cmbEvraklar.ValueMember = "EvrakTipi";
-            cmbEvraklar.DisplayMember = "EvrakAdi";
-            cmbEvraklar.DataSource = ArabulucuHelper.EvrakListesi();
         }
 
+        //İLK AÇILIŞ KAYITLI BÜRO YOKSA
         private void BuroKayitFormGetir()
         {
             kayitliBuro = buroDB.Find(x => x.AktifMi);
@@ -89,22 +97,7 @@ namespace Arabulucu
             }
         }
 
-        private void MainForm_SizeChanged(object sender, EventArgs e)
-        {
-            splitGrid.SplitterPosition = this.Width / 4;
-            sidePanel3.Width = this.Width / 8;
-
-            if (this.Width > 1400)
-            {
-                sidePanel3.Visible = true;
-            }
-            else
-            {
-                sidePanel3.Visible = false;
-            }
-        }
-
-        TarafSecimForm trfSecimForm;
+        //DAVA PANELİNE KARŞI TARAF EKLEME
         private void btnKarsiTarafEkle_Click(object sender, EventArgs e)
         {
             trfSecimForm = new TarafSecimForm();
@@ -118,6 +111,14 @@ namespace Arabulucu
                     pnlKarsiTaraf.Controls.Add(karsiTarafKurumUC);
                     karsiTarafKurumUC.SendToBack();
                 }
+                else if (trfSecimForm.secilenTaraf.KisiSirketKurum == TarafTipi.Sirket)
+                {
+                    karsiTarafSirketUC = new KarsiTarafSirketUC() { Height = 180 };
+                    karsiTarafSirketUC.TarafSecici(trfSecimForm.secilenTaraf);
+                    karsiTarafSirketUC.Dock = DockStyle.Bottom;
+                    pnlKarsiTaraf.Controls.Add(karsiTarafSirketUC);
+                    karsiTarafSirketUC.SendToBack();
+                }
                 else
                 {
                     karsiTarafUC = new KarsiTarafUC() { Height = 165 };
@@ -130,26 +131,30 @@ namespace Arabulucu
             pnlDosyaDetay.ScrollControlIntoView(btnKarsiTarafEkle);
         }
 
+        //DAVA PANELİ GÖRÜNTÜ BOZULMALARINA KARŞI YENİLEME
         private void pnlKarsiTaraf_SizeChanged(object sender, EventArgs e)
         {
             this.Refresh();
         }
 
+        //DAVA GRID DAVA SECME İŞLEMİ
         private void gridViewMainDava_RowClick(object sender, DevExpress.XtraGrid.Views.Grid.RowClickEventArgs e)
         {
             if (e.Clicks == 2)
             {
                 panel2.Enabled = true;
+                pnlDetailFill.Enabled = true;
                 secilenRowIndex = e.RowHandle;
                 secilenDavaID = (Guid)gridViewMainDava.GetRowCellValue(secilenRowIndex, "ID");
                 secilenDava = davaDB.Find(x => x.ID == secilenDavaID);
-                FillMainDavaPanel(secilenDava);
 
-                gorusmeSource = new ObservableCollection<Gorusme>(gorusmeDB.List(x => x.DavaID == secilenDavaID));
-                gridControlGorusme.DataSource = gorusmeSource;
+                FillMainDavaPanel(secilenDava);
+                FillDosyaYonetici();
+                FillGorusmeler();
             }
         }
 
+        //DAVA PANELİ DOLDUR
         private void FillMainDavaPanel(Dava gelenDava)
         {
             SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
@@ -162,13 +167,19 @@ namespace Arabulucu
             {
                 if (kTaraf.Taraf != null)
                 {
-                    if (kTaraf.Taraf.KisiSirketKurum != TarafTipi.Kurum)
+                    if (kTaraf.Taraf.KisiSirketKurum == TarafTipi.Kisi)
                     {
                         karsiTarafUC = new KarsiTarafUC();
                         karsiTarafUC.FillTaraf(kTaraf);
                         pnlKarsiTaraf.Controls.Add(karsiTarafUC);
                     }
-                    else
+                    else if (kTaraf.Taraf.KisiSirketKurum == TarafTipi.Sirket)
+                    {
+                        karsiTarafSirketUC = new KarsiTarafSirketUC();
+                        karsiTarafSirketUC.FillTaraf(kTaraf);
+                        pnlKarsiTaraf.Controls.Add(karsiTarafSirketUC);
+                    }
+                    else if (kTaraf.Taraf.KisiSirketKurum == TarafTipi.Kurum)
                     {
                         karsiTarafKurumUC = new KarsiTarafKurumUC();
                         karsiTarafKurumUC.FillTaraf(kTaraf);
@@ -182,6 +193,36 @@ namespace Arabulucu
             SplashScreenManager.CloseForm();
         }
 
+        //DOSYA YÖNETİCİSİ DOLDUR
+        private void FillDosyaYonetici()
+        {
+            treeListFolder.ClearNodes();
+
+            fPath = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Arabulucu Evraklar\" + secilenDava.ID;
+            dInfo = new DirectoryInfo(fPath);
+
+            treeListFolder.BeginUnboundLoad();
+
+            baslikNode = treeListFolder.AppendNode(new object[] { secilenDava.ArabuluculukDosyaNo, dInfo.LastWriteTime, "", dInfo.FullName }, -1);
+
+            if (dInfo.Exists)
+            {
+                foreach (var folder in dInfo.GetDirectories())
+                {
+                    turNode = treeListFolder.AppendNode(new object[] { folder.Name, folder.LastWriteTime, "", folder.FullName }, baslikNode.Id, 1, 1, -1);
+
+                    foreach (var file in folder.GetFiles())
+                    {
+                        treeListFolder.AppendNode(new object[] { file.Name, file.LastWriteTime, file.FullName, file.FullName }, turNode.Id, 2, 2, -1);
+                    }
+                }
+            }
+            treeListFolder.EndUnboundLoad();
+
+            treeListFolder.ExpandAll();
+        }
+
+        //DAVA SİL
         private void btnDavaSil_Click(object sender, EventArgs e)
         {
             davaDB.Delete(secilenDava);
@@ -189,6 +230,7 @@ namespace Arabulucu
             gridViewMainDava.RefreshData();
         }
 
+        //DAVA GÜNCELLE
         private void btnDavaGuncelle_Click(object sender, EventArgs e)
         {
             dosyaBilgileriUC1.UpdateDava(secilenDava);
@@ -215,6 +257,10 @@ namespace Arabulucu
                     {
                         (item as KarsiTarafUC).UpdateKarsiTaraf(secilenDava);
                     }
+                    else if (item.GetType() == typeof(KarsiTarafSirketUC))
+                    {
+                        (item as KarsiTarafSirketUC).UpdateKarsiTaraf(secilenDava);
+                    }
                     else if (item.GetType() == typeof(KarsiTarafKurumUC))
                     {
                         (item as KarsiTarafKurumUC).UpdateKarsiTaraf(secilenDava);
@@ -228,13 +274,8 @@ namespace Arabulucu
             ArabulucuHelper.KayitBasariliFormGetir();
         }
 
+        //BÜRO GÜNCELLEME FORMU
         private void btnBurom_Click(object sender, EventArgs e)
-        {
-            BuroDuzenleFormGetir();
-        }
-
-        static BuroGuncelleForm buroGuncelleForm;
-        public void BuroDuzenleFormGetir()
         {
             if (buroGuncelleForm == null || buroGuncelleForm.IsDisposed == true)
             {
@@ -250,13 +291,8 @@ namespace Arabulucu
             }
         }
 
+        //TARAFLAR FORM
         private void btnTaraflar_Click(object sender, EventArgs e)
-        {
-            TaraflarFormGetir();
-        }
-
-        static TaraflarForm taraflarForm;
-        public void TaraflarFormGetir()
         {
             if (taraflarForm == null || taraflarForm.IsDisposed == true)
             {
@@ -272,7 +308,7 @@ namespace Arabulucu
             }
         }
 
-        static VekillerForm vekillerForm;
+        //VEKİLLER FORM
         private void btnVekiller_Click(object sender, EventArgs e)
         {
             if (vekillerForm == null || vekillerForm.IsDisposed == true)
@@ -289,7 +325,7 @@ namespace Arabulucu
             }
         }
 
-        static DosyaEkleForm dosyaEkleForm;
+        //DAVA EKLE FORM
         private void btnDavaEkle_Click(object sender, EventArgs e)
         {
             if (dosyaEkleForm == null || dosyaEkleForm.IsDisposed == true)
@@ -306,140 +342,117 @@ namespace Arabulucu
             }
         }
 
-        Evrak secilenEvrak;
-        string belgeYolu;
-
-        static Microsoft.Office.Interop.Word.Application wordApp;
-        private void btnBelgeDuzenle_Click(object sender, EventArgs e)
-        {
-            if (belgeYolu != null)
-            {
-                wordApp = new Microsoft.Office.Interop.Word.Application();
-                wordApp.Application.Documents.Open(belgeYolu + ".docx");
-                wordApp.Visible = true;
-                wordApp.Activate();
-            }
-        }
-
+        //DOSYA YÖNETİCİSİ YENİLE
         private void bntBelgeYenile_Click(object sender, EventArgs e)
         {
-            pdfViewer1.DocumentFilePath = "";
-
-            EvrakOlusturucu.Yenile(belgeYolu);
-            pdfViewer1.DocumentFilePath = belgeYolu + ".pdf";
+            FillDosyaYonetici();
         }
 
-        private void btnOlustur_Click(object sender, EventArgs e)
+        //TREELIST DOSYA,KLASÖR İSİM DEĞİŞTİRME
+        private void treeListFolder_CellValueChanged(object sender, DevExpress.XtraTreeList.CellValueChangedEventArgs e)
         {
-            if (cmbEvraklar.SelectedIndex != -1 && secilenDava != null)
+            if (e.Value as String != "" && !e.Node.HasChildren)
             {
-                secilenEvrak = (Evrak)cmbEvraklar.SelectedItem;
+                fInfo = new FileInfo(e.Node[3] as String);
+                fInfo.MoveTo(fInfo.DirectoryName + "\\" + e.Value);
+            }
+            else
+            {
+                MessageBox.Show("Ana Dizinlerin Adı Değiştirilemez", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            FillDosyaYonetici();
+        }
 
-                if (secilenEvrak.EvrakTipi == EvrakTipi.DosyaKapakSayfasi)
+        //DOSYA, KLASÖR SİLME
+        private void btnSil_Click(object sender, EventArgs e)
+        {
+            ArrayList rowDatas = treeListFolder.GetFocusedRow() as ArrayList;
+            fInfo = new FileInfo(rowDatas[3].ToString());
+
+            if (rowDatas[0].ToString() == secilenDava.ArabuluculukDosyaNo)
+            {
+                MessageBox.Show("Ana Dizin Silinemez.");
+            }
+            else if (fInfo.Exists)
+            {
+                if (MessageBox.Show("'" + rowDatas[0] + "' İsimli Dosyayı Silmek İstediğinizden Eminmisiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
                 {
-                    SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                    belgeYolu = EvrakOlusturucu.dosyaKapakSayfasi(secilenDava);
-                    SplashScreenManager.CloseForm();
-
-                }
-
-                else if (secilenEvrak.EvrakTipi == EvrakTipi.ToplantiDavet)
-                {
-                    ToplantıDavetForm frm = new ToplantıDavetForm(secilenDava);
-
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                        if (!frm.vekilMi)
-                        {
-                            Taraf davetEdilenTaraf = tarafDB.Find(x => x.ID == frm.davetEdilenID);
-                            belgeYolu = EvrakOlusturucu.ToplantiyaDavet(secilenDava, frm.karsiTaraf, davetEdilenTaraf, frm.toplantiTarihi);
-                        }
-                        else
-                        {
-                            Vekil davetEdilenTaraf = vekilDB.Find(x => x.ID == frm.davetEdilenID);
-                            belgeYolu = EvrakOlusturucu.ToplantiyaDavet(secilenDava, frm.karsiTaraf, davetEdilenTaraf, frm.toplantiTarihi);
-                        }
-                        SplashScreenManager.CloseForm();
-                    }
-                }
-
-                else if (secilenEvrak.EvrakTipi == EvrakTipi.UcretSozlesmesi)
-                {
-                    UcretSozlesmeForm frm = new UcretSozlesmeForm(secilenDava.Burosu.HesapBilgileri.Where(x => x.AktifMi).ToList());
-
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                        belgeYolu = EvrakOlusturucu.UcretSozlesmesi(secilenDava, frm.secilenHesap, DateTime.Now);
-                        SplashScreenManager.CloseForm();
-                    }
-                }
-
-                else if (secilenEvrak.EvrakTipi == EvrakTipi.ToplantiTutanagi)
-                {
-                    SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                    belgeYolu = EvrakOlusturucu.ToplantiTutanagi(secilenDava);
-                    SplashScreenManager.CloseForm();
-                }
-
-
-                else if (secilenEvrak.EvrakTipi == EvrakTipi.ToplantiErtelemeTutanagi)
-                {
-                    ToplantiErtelemeForm frm = new ToplantiErtelemeForm();
-
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                        belgeYolu = EvrakOlusturucu.ToplantiErtelemeTutanagi(secilenDava, frm.yeniTarih);
-                        SplashScreenManager.CloseForm();
-                    }
-                }
-
-                else if (secilenEvrak.EvrakTipi == EvrakTipi.AnlasmaTutanagi)
-                {
-                    AnlasmaTutanagiForm frm = new AnlasmaTutanagiForm(secilenDava);
-                    if (frm.ShowDialog() == DialogResult.OK)
-                    {
-                        SplashScreenManager.ShowForm(this, typeof(WaitForm1), true, true);
-                        if (frm.formdanGelenler != null)
-                        {
-                            if (frm.formdanGelenler.KismiAnlasma)
-                            {
-                                belgeYolu = EvrakOlusturucu.KismiAnlasmaTutanagi(secilenDava, frm.formdanGelenler);
-                            }
-                            else
-                            {
-                                belgeYolu = EvrakOlusturucu.BirdenFazlaAnlasmaTutanagi(secilenDava, frm.formdanGelenler);
-                            }
-                        }
-                        else
-                        {
-                            belgeYolu = EvrakOlusturucu.AnlasmaTutanagi(secilenDava, frm.anlasmaMetni, frm.bitisTarihi, frm.odemeTarihi);
-                        }
-                        SplashScreenManager.CloseForm();
-                    }
-                }
-
-                if (belgeYolu != null)
-                {
-                    pdfViewer1.DocumentFilePath = belgeYolu + ".pdf";
+                    fInfo.Delete();
                 }
             }
+            else
+            {
+                dInfo = new DirectoryInfo(rowDatas[3].ToString());
+                if (MessageBox.Show("'" + rowDatas[0] + "' İsimli Dosyayı Silmek İstediğinizden Eminmisiniz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    foreach (var file in dInfo.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    dInfo.Delete();
+                }
+            }
+
+            FillDosyaYonetici();
         }
 
+        //DOSYA,KLASÖR YENİ PENCERE
         private void btnBelgeYeniPencere_Click(object sender, EventArgs e)
         {
-            if (belgeYolu != null && belgeYolu != "")
+            ArrayList rowDatas = treeListFolder.GetFocusedRow() as ArrayList;
+            Process pr = new Process();
+            pr.StartInfo = new ProcessStartInfo(rowDatas[3].ToString());
+            pr.Start();
+        }
+
+        private void btnGorusmeSil_Click(object sender, EventArgs e)
+        {
+            if (gridViewGorusme.SelectedRowsCount > 0)
             {
-                BelgeTamEkranForm frm = new BelgeTamEkranForm(belgeYolu);
-                frm.Show();
+                var secilenRow = gridViewGorusme.GetSelectedRows().FirstOrDefault();
+
+                Gorusme secilenGorusme = gridViewGorusme.GetRow(secilenRow) as Gorusme;
+
+                if (MessageBox.Show(secilenGorusme.GorusmeAdi + "\n" + secilenGorusme.GorusmeTarihi + "\n Seçilen Görüşmeyi Silmeyi Onaylıyormusunuz?", "Uyarı", MessageBoxButtons.YesNo, MessageBoxIcon.Warning) == DialogResult.Yes)
+                {
+                    secilenDava.Gorusmeler.Remove(secilenGorusme);
+                    davaDB.Update(secilenDava);
+                    FillGorusmeler();
+                }
             }
         }
 
-        private void btnYazdır_Click(object sender, EventArgs e)
+        private void btnAyarlar_Click(object sender, EventArgs e)
         {
-            pdfViewer1.Print();
+
+        }
+
+        private void btnBildirimler_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnYeniEvrak_Click(object sender, EventArgs e)
+        {
+            using (yeniEvrakForm = new YeniEvrakForm(secilenDava, Cursor.Position.X - 259, Cursor.Position.Y))
+            {
+                if (yeniEvrakForm.ShowDialog() == DialogResult.OK)
+                {
+                    yeniEvrakForm.Activate();
+
+                    FillDosyaYonetici();
+                    FillGorusmeler();
+                }
+            }
+        }
+
+
+        //GÖRÜŞMELER GRID DOLDUR
+        private void FillGorusmeler()
+        {
+            gridControlGorusme.DataSource = secilenDava.Gorusmeler.ToList();
+            gridControlGorusme.RefreshDataSource();
         }
     }
 }

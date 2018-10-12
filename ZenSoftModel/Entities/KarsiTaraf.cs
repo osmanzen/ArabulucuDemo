@@ -57,12 +57,24 @@ namespace ZenSoftModel.Entities
             }
         }
 
+        private Guid? yetkiliID { get; set; }
+        public Guid? YetkiliID
+        {
+            get { return yetkiliID; }
+            set
+            {
+                if (value == YetkiliID) return; yetkiliID = value;
+                OnPropertyChanged("YetkiliID");
+            }
+        }
 
         public virtual Taraf Taraf { get; set; }
 
         public virtual Vekil Vekil { get; set; }
 
         public virtual Dava Dava { get; set; }
+
+        public virtual SirketYetkilisi Yetkili { get; set; }
 
         public virtual ICollection<Heyet> Heyetleri { get; set; }
 

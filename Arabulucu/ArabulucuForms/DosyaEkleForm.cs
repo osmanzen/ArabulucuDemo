@@ -15,6 +15,7 @@ using DevExpress.XtraSplashScreen;
 using ZenSoftModel.Entities;
 using ZenSoftDAL.EntityFramework;
 using System.Collections.ObjectModel;
+using System.IO;
 
 namespace Arabulucu
 {
@@ -39,6 +40,7 @@ namespace Arabulucu
         TarafSecimForm trfSecimForm;
         KarsiTarafUC karsiTarafUC;
         KarsiTarafKurumUC karsiTarafKurumUC;
+        KarsiTarafSirketUC karsiTarafSirketUC;
 
         Dava yeniDava;
 
@@ -58,6 +60,13 @@ namespace Arabulucu
                     karsiTarafKurumUC.TarafSecici(trfSecimForm.secilenTaraf);
                     karsiTarafKurumUC.Dock = DockStyle.Bottom;
                     pnlKarsiTaraf.Controls.Add(karsiTarafKurumUC);
+                }
+                else if (trfSecimForm.secilenTaraf.KisiSirketKurum == TarafTipi.Sirket)
+                {
+                    karsiTarafSirketUC = new KarsiTarafSirketUC() { Height = 180 };
+                    karsiTarafSirketUC.TarafSecici(trfSecimForm.secilenTaraf);
+                    karsiTarafSirketUC.Dock = DockStyle.Bottom;
+                    pnlKarsiTaraf.Controls.Add(karsiTarafSirketUC);
                 }
                 else
                 {
@@ -100,6 +109,10 @@ namespace Arabulucu
                     {
                         (item as KarsiTarafUC).UpdateKarsiTaraf(yeniDava);
                     }
+                    else if (item.GetType() == typeof(KarsiTarafSirketUC))
+                    {
+                        (item as KarsiTarafSirketUC).UpdateKarsiTaraf(yeniDava);
+                    }
                     else if (item.GetType() == typeof(KarsiTarafKurumUC))
                     {
                         (item as KarsiTarafKurumUC).UpdateKarsiTaraf(yeniDava);
@@ -108,6 +121,8 @@ namespace Arabulucu
             }
             davaDB.Insert(yeniDava);
             davaSource.Add(yeniDava);
+
+            Directory.CreateDirectory(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments) + @"\Arabulucu Evraklar\" + yeniDava.ID);
         }
 
         DosyaTuruForm dosyaTuruFrm;

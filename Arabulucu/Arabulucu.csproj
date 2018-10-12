@@ -127,6 +127,9 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Word.15.0.4797.1003\lib\net20\Microsoft.Office.Interop.Word.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
@@ -146,8 +149,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArabulucuForms\YeniEvrakForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ArabulucuForms\YeniEvrakForm.Designer.cs">
+      <DependentUpon>YeniEvrakForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ArabulucuHelpers\ArabulucuHelper.cs" />
+    <Compile Include="ArabulucuHelpers\BelgeOlusturucu.cs" />
     <Compile Include="ArabulucuHelpers\EvrakOlusturucu.cs" />
+    <Compile Include="ArabulucuHelpers\XmlOlusturucu.cs" />
     <Compile Include="ArabulucuUC\BasvurucuUC.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -159,6 +170,12 @@
     </Compile>
     <Compile Include="ArabulucuUC\DosyaBilgileriUC.Designer.cs">
       <DependentUpon>DosyaBilgileriUC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafSirketUC.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ArabulucuUC\KarsiTarafSirketUC.Designer.cs">
+      <DependentUpon>KarsiTarafSirketUC.cs</DependentUpon>
     </Compile>
     <Compile Include="ArabulucuUC\KarsiTarafUC.cs">
       <SubType>UserControl</SubType>
@@ -250,6 +267,12 @@
     <Compile Include="MessageForms\KayitBasariliForm.Designer.cs">
       <DependentUpon>KayitBasariliForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="MessageForms\SirketYetkiliForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MessageForms\SirketYetkiliForm.Designer.cs">
+      <DependentUpon>SirketYetkiliForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MessageForms\TarafSecimForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -294,11 +317,17 @@
     <Compile Include="MessageForms\WaitForm1.Designer.cs">
       <DependentUpon>WaitForm1.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="ArabulucuForms\YeniEvrakForm.resx">
+      <DependentUpon>YeniEvrakForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ArabulucuUC\BasvurucuUC.resx">
       <DependentUpon>BasvurucuUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ArabulucuUC\DosyaBilgileriUC.resx">
       <DependentUpon>DosyaBilgileriUC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ArabulucuUC\KarsiTarafSirketUC.resx">
+      <DependentUpon>KarsiTarafSirketUC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ArabulucuUC\KarsiTarafUC.resx">
       <DependentUpon>KarsiTarafUC.cs</DependentUpon>
@@ -342,6 +371,9 @@
     <EmbeddedResource Include="MessageForms\HeyetEkleForm.resx">
       <DependentUpon>HeyetEkleForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MessageForms\SirketYetkiliForm.resx">
+      <DependentUpon>SirketYetkiliForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MessageForms\TarafSecimForm.resx">
       <DependentUpon>TarafSecimForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -351,6 +383,7 @@
     <EmbeddedResource Include="MessageForms\VekilSecimForm.resx">
       <DependentUpon>VekilSecimForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -416,97 +449,159 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add.svg" />
+    <None Include="Resources\add.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-add-folder-filled-32.png" />
+    <None Include="Resources\icons8-add-folder-filled-32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-alarm-filled-32.png" />
+    <None Include="Resources\icons8-alarm-filled-32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-people-filled-32.png" />
+    <None Include="Resources\icons8-people-filled-32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-scales-filled-32.png" />
+    <None Include="Resources\icons8-scales-filled-32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-services-filled-32.png" />
+    <None Include="Resources\icons8-services-filled-32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-law-filled-321.png" />
+    <None Include="Resources\icons8-law-filled-321.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\close.svg" />
+    <None Include="Resources\close.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add1.svg" />
+    <None Include="Resources\add1.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\close1.svg" />
+    <None Include="Resources\close1.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\close2.svg" />
+    <None Include="Resources\close2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\remove.svg" />
+    <None Include="Resources\remove.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\delete.svg" />
+    <None Include="Resources\delete.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\close3.svg" />
+    <None Include="Resources\close3.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add2.svg" />
+    <None Include="Resources\add2.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\additem.svg" />
+    <None Include="Resources\additem.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-available-updates-16.png" />
+    <None Include="Resources\icons8-available-updates-16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\cancel_16x16.png" />
+    <None Include="Resources\cancel_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add_16x16.png" />
+    <None Include="Resources\add_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\apply_16x16.png" />
+    <None Include="Resources\apply_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\OkGif.gif" />
+    <None Include="Resources\OkGif.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\icons8-search-16.png" />
+    <None Include="Resources\icons8-search-16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\add_16x161.png" />
+    <None Include="Resources\add_16x161.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\printer_16x16.png" />
+    <None Include="Resources\printer_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\preview_16x16.png" />
+    <None Include="Resources\preview_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\customization_16x16.png" />
+    <None Include="Resources\customization_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\edit_32x32.png" />
+    <None Include="Resources\edit_32x32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\refresh_16x16.png" />
+    <None Include="Resources\refresh_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\show_16x16.png" />
+    <None Include="Resources\show_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\addfile_16x16.png" />
+    <None Include="Resources\addfile_16x16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Zensoft_logo.png" />
+    <None Include="Resources\Zensoft_logo.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.6.1">
@@ -520,6 +615,45 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\open_32x32.png" />
+    <None Include="Resources\textbox_32x32.png" />
+    <None Include="Resources\insert_32x321.png" />
+    <None Include="Resources\projectfile_32x32.png" />
+    <None Include="Resources\reviewers_32x32.png" />
+    <None Include="Resources\team_32x32.png" />
+    <None Include="Resources\technology_32x32.png" />
+    <None Include="Resources\weightedpies_32x32.png" />
+    <None Include="Resources\insert_32x32.png" />
+    <None Include="Resources\refresh_32x32.png" />
+    <None Include="Resources\zoom_32x32.png" />
+    <None Include="Resources\movedown_16x16.png" />
+    <None Include="Resources\moveup_16x16.png" />
+    <None Include="Resources\zoom_16x161.png" />
+    <None Include="Resources\zoom_16x16.png" />
+    <None Include="Resources\trash_32x32.png" />
+    <None Include="Resources\moveup_32x32.png" />
+    <None Include="Resources\movedown_32x32.png" />
+    <None Include="Resources\clear_16x16.png" />
+    <None Include="Resources\icons8-bookmark.svg" />
+    <None Include="Resources\clearall_32x32.png" />
+    <None Include="Resources\bocustomer_32x32.png" />
+    <None Include="Resources\bonote_32x32.png" />
+    <None Include="Resources\article_32x32.png" />
+    <None Include="Resources\apply_32x32.png" />
+    <None Include="Resources\cancel_32x32.png" />
+    <None Include="Resources\icons8-document %281%29.svg" />
+    <None Include="Resources\addfile_32x32.png" />
+    <Content Include="Resources\icons8-document.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="Resources\icons8-folder1.svg" />
+    <None Include="Resources\icons8-document1.svg" />
+    <Content Include="Resources\icons8-folder.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

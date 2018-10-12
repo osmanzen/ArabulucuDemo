@@ -86,6 +86,11 @@
     <Compile Include="EntityFramework\DatabaseContext.cs" />
     <Compile Include="EntityFramework\Repository.cs" />
     <Compile Include="EntityFramework\RepositoryBase.cs" />
+    <Compile Include="Migrations\201810102240175_InitialCreate.cs" />
+    <Compile Include="Migrations\201810102240175_InitialCreate.Designer.cs">
+      <DependentUpon>201810102240175_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +102,11 @@
       <Project>{D5F65AF1-BD88-445E-B08C-682DBF7C1B9A}</Project>
       <Name>ZenSoftModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201810102240175_InitialCreate.resx">
+      <DependentUpon>201810102240175_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -50,6 +50,17 @@ namespace ZenSoftModel.Entities
             }
         }
 
+        private string gorusmeVeri { get; set; }
+        public string GorusmeVeri
+        {
+            get { return gorusmeVeri; }
+            set
+            {
+                if (value == GorusmeVeri) return; gorusmeVeri = value;
+                OnPropertyChanged("GorusmeVeri");
+            }
+        }
+
         private bool gorusmeYapildi { get; set; }
         public bool GorusmeYapildi
         {

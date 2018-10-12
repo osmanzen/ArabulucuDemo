@@ -1,8 +1,11 @@
-﻿using System;
+﻿using DevExpress.XtraEditors.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using ZenSoftModel.Entities;
 
 namespace ZenSoftModel.DTO
 {
@@ -55,5 +58,25 @@ namespace ZenSoftModel.DTO
         public DateTime AnlasmaTarihi { get; set; }
         public DateTime OdemeTarihi { get; set; }
         public bool KismiAnlasma { get; set; }
+    }
+
+    [Serializable]
+    public class GorusmeVerisi
+    {
+        public List<CBoxListItem> karsiTarafCheckedListBoxItems { get; set; }
+    }
+
+    [Serializable]
+    public class CBoxListItem
+    {
+        public CBoxListItem(Guid _tarafID, CheckState _checkState)
+        {
+            tarafID = _tarafID;
+            checkState = _checkState;
+        }
+
+        public Guid tarafID { get; set; }
+
+        public CheckState checkState { get; set; }
     }
 }

@@ -79,7 +79,7 @@
             this.pnlDosya.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlDosya.Location = new System.Drawing.Point(0, 0);
             this.pnlDosya.Name = "pnlDosya";
-            this.pnlDosya.Size = new System.Drawing.Size(409, 524);
+            this.pnlDosya.Size = new System.Drawing.Size(409, 513);
             this.pnlDosya.TabIndex = 5;
             // 
             // pnlKarsiTaraf
@@ -289,17 +289,17 @@
             // 
             // btnDosyaEkle
             // 
-            this.btnDosyaEkle.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.btnDosyaEkle.Appearance.Font = new System.Drawing.Font("Tahoma", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.btnDosyaEkle.Appearance.Options.UseFont = true;
             this.btnDosyaEkle.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.btnDosyaEkle.ImageOptions.ImageToTextAlignment = DevExpress.XtraEditors.ImageAlignToText.LeftCenter;
             this.btnDosyaEkle.ImageOptions.SvgImage = ((DevExpress.Utils.Svg.SvgImage)(resources.GetObject("btnDosyaEkle.ImageOptions.SvgImage")));
             this.btnDosyaEkle.ImageOptions.SvgImageSize = new System.Drawing.Size(16, 16);
-            this.btnDosyaEkle.Location = new System.Drawing.Point(0, 524);
+            this.btnDosyaEkle.Location = new System.Drawing.Point(0, 513);
             this.btnDosyaEkle.LookAndFeel.SkinName = "The Bezier";
             this.btnDosyaEkle.LookAndFeel.UseDefaultLookAndFeel = false;
             this.btnDosyaEkle.Name = "btnDosyaEkle";
-            this.btnDosyaEkle.Size = new System.Drawing.Size(409, 29);
+            this.btnDosyaEkle.Size = new System.Drawing.Size(409, 40);
             this.btnDosyaEkle.TabIndex = 4;
             this.btnDosyaEkle.Text = "Dosya Ekle";
             this.btnDosyaEkle.Click += new System.EventHandler(this.btnDosyaEkle_Click);

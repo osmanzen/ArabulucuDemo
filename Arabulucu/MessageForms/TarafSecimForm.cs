@@ -16,13 +16,19 @@ namespace Arabulucu.MessageForms
 {
     public partial class TarafSecimForm : DevExpress.XtraEditors.XtraForm
     {
-        public TarafSecimForm(int aktifTab=0)
+        public TarafSecimForm(int aktifTab=3)
         {
             InitializeComponent();
 
-            if (aktifTab == 1)
+            if (aktifTab == 0)
             {
                 tabPageKisi.PageVisible = true;
+                tabPageSirket.PageVisible = false;
+                tabPageKurum.PageVisible = false;
+            }
+            else if(aktifTab==1)
+            {
+                tabPageKisi.PageVisible = false;
                 tabPageSirket.PageVisible = true;
                 tabPageKurum.PageVisible = false;
             }
@@ -30,6 +36,12 @@ namespace Arabulucu.MessageForms
             {
                 tabPageKisi.PageVisible = false;
                 tabPageSirket.PageVisible = false;
+                tabPageKurum.PageVisible = true;
+            }
+            else if (aktifTab == 3)
+            {
+                tabPageKisi.PageVisible = true;
+                tabPageSirket.PageVisible = true;
                 tabPageKurum.PageVisible = true;
             }
 
